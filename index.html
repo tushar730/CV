@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My AI Resume</title>
+  <style>
+    body { display: flex; height: 100vh; margin: 0; font-family: sans-serif; }
+    iframe { flex: 1; border: none; }
+    #chatbot {
+      flex: 1;
+      padding: 20px;
+      border-left: 2px solid #ccc;
+      display: flex;
+      flex-direction: column;
+    }
+    #messages {
+      flex: 1;
+      overflow-y: auto;
+      margin-bottom: 10px;
+    }
+    input {
+      padding: 10px;
+      font-size: 1rem;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <iframe src="resume.pdf"></iframe>
+  <div id="chatbot">
+    <h2>Ask Me Anything</h2>
+    <div id="messages"></div>
+    <input type="text" id="userInput" placeholder="Ask a question like 'What are your skills?'" />
+  </div>
+
+  <script>
+    const messages = document.getElementById('messages');
+    const userInput = document.getElementById('userInput');
+
+    const fakeAI = (q) => {
+      q = q.toLowerCase();
+      if (q.includes("skills")) return "I have skills in Python, marketing analytics, and AI tools.";
+      if (q.includes("education")) return "I studied Marketing and Data Science at XYZ University.";
+      if (q.includes("experience")) return "I worked as a marketing intern at ABC Corp for 6 months.";
+      return "Sorry, I don't have an answer for that yet.";
+    };
+
+    userInput.addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
+        const question = userInput.value;
+        messages.innerHTML += `<p><strong>You:</strong> ${question}</p>`;
+        const answer = fakeAI(question);
+        messages.innerHTML += `<p><strong>AI:</strong> ${answer}</p>`;
+        userInput.value = '';
+        messages.scrollTop = messages.scrollHeight;
+      }
+    });
+  </script>
+</body>
+</html>
